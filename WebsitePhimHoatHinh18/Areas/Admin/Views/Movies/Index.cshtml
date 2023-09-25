@@ -1,0 +1,111 @@
+﻿@model PagedList.IPagedList<WebsitePhimHoatHinh18.Models.EF.Movies>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+}
+
+<h2>Danh sách phim</h2>
+
+<div>
+    @Html.ActionLink("Thêm mới", "Create", null, new { @class = "btn btn-outline-primary" })
+    <hr />
+</div>
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Mã phim
+            </th>
+            <th>
+                Tên phim
+            </th>
+            <th>
+                Thể loại
+            </th>
+            <th>
+                Quốc gia
+            </th>
+            <th>
+                Đạo diễn
+            </th>
+            <th>
+                Mô tả
+            </th>
+            <th>
+                Năm phát hành
+            </th>
+            <th>
+                Thời lượng
+            </th>
+            <th>
+                Lượt xem
+            </th>
+            <th>
+                Đánh giá
+            </th>
+            <th>
+                Hình ảnh
+            </th>
+            <th>
+                Video
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MovieID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tilte)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genres.GenreName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Countries.CountryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Director)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.View)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Image)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Video)
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.MovieID })"><i class="fas fa-edit"></i></a>
+                    <a href="@Url.Action("Details", new { id = item.MovieID })"><i class="fas fa-info-circle"></i></a>
+                    <a href="@Url.Action("Delete", new { id = item.MovieID })"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        }
+
+</table>
+
+<br />
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

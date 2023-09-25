@@ -1,0 +1,106 @@
+﻿@model WebsitePhimHoatHinh18.Models.EF.Movies
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link href="~/Content/Styles.css" rel="stylesheet" />
+    var user = Session["User"] as WebsitePhimHoatHinh18.Models.EF.Users;
+ }
+
+<div class="container">
+    <div class="top">
+        @if (!string.IsNullOrEmpty(Model.Video))
+        {
+            <video controls width="835">
+                <source src="@Url.Content("~/Uploads/Videos/" + Model.Video)" type="video/mp4">
+            </video>
+        }
+        <h4>@Html.DisplayFor(model => model.Tilte)</h4>
+    </div>
+    <div class="content">
+        <div class="left">
+            <p>
+                Thể loại: @Html.DisplayFor(model => model.Genres.GenreName) <br />
+                Quốc gia: @Html.DisplayFor(model => model.Countries.CountryName) <br />
+                Đạo diễn: @Html.DisplayFor(model => model.Director) <br />
+                Năm phát hành: @Html.DisplayFor(model => model.Year) <br />
+                Thời lượng: @Html.DisplayFor(model => model.Time) <br />
+                Lượt xem: @Html.DisplayFor(model => model.View) <br />
+                Đánh giá: @Html.DisplayFor(model => model.Rate) <br />
+                Mô tả: @Html.DisplayFor(model => model.Description) <br />
+            </p>
+        </div>
+        <div class="right">
+            @if (!string.IsNullOrEmpty(Model.Image))
+            {
+                <img src="@Url.Content("~/Uploads/Images/" + Model.Image)" width="200" height="260" />
+            }
+        </div>
+    </div>
+    <div class="bottom">
+        <div>
+            @Html.ActionLink("Thêm vào mục yêu thích", "Create", "FavoriteU", new { id = Model.MovieID }, new { @class = "btn btn-primary" })
+        </div>
+        <br />
+        @if (Model.Comments.Any())
+        {
+            <h4>Bình luận</h4>
+            <ul>
+                @foreach (var comment in Model.Comments)
+                {
+                    <li>
+                        <strong>@comment.Users.UserName:</strong> @comment.CommentText
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>No comments yet.</p>
+        }
+        @if (Session["User"] != null)
+        {
+            using (Html.BeginForm("Create", "CommentU", FormMethod.Post))
+            {
+                @Html.Hidden("id", Model.MovieID)
+                <div class="form-group">
+                    @Html.Label("Đánh giá")
+                    @Html.DropDownList("rate", new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "1", Value = "1" },
+                        new SelectListItem { Text = "2", Value = "2" },
+                        new SelectListItem { Text = "3", Value = "3" },
+                        new SelectListItem { Text = "4", Value = "4" },
+                        new SelectListItem { Text = "5", Value = "5" }
+                    }, new { @class = "form-control" })
+                </div>
+                <br />
+                <div class="form-group">
+                    @Html.TextArea("text", null, new { @class = "form-control", placeholder = "Add a comment..." })
+                </div>
+                <br />
+                <button type="submit" class="btn btn-primary">Submit</button>
+            }
+            <br />
+            using (Html.BeginForm("Create", "ReportU", FormMethod.Post))
+            {
+                @Html.Hidden("id", Model.MovieID)
+                <div class="form-group">
+                    @Html.TextArea("text", null, new { @class = "form-control", placeholder = "Add a report..." })
+                    <br />
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            }
+            <br />
+            <div>
+                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-primary" })
+            </div>
+        }
+        else
+        {
+            <a> Vui lòng đăng nhập để bình luận!</a>
+            <br /><br />
+            @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-primary" })
+        }
+    </div>
+</div>

@@ -1,0 +1,29 @@
+﻿@model PagedList.IPagedList<WebsitePhimHoatHinh18.Models.EF.Movies>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        @*<div class="col-md-3" style="margin-top:10px;text-align: center; font-size: 20px;">
+                <img src="@Url.Content("~/Uploads/Images/" + item.Image)" width="238" height="344"> <br />
+                <span>@Html.DisplayFor(modelitem => item.Tilte)</span> <br />
+                <a class="btn btn-info btn-sm" href="@Url.Action("Details", "Movies", new { id = item.MovieID })">Xem Phim</a>
+            </div>*@
+        <div class="col-md-3" style="margin-top:10px;text-align: center; font-size: 18px;">
+            <a href="@Url.Action("Details", "MovieU", new { id = item.MovieID })">
+                <img src="@Url.Content("~/Uploads/Images/" + item.Image)" width="238" height="344"> <br />
+            </a>
+            <span>@Html.DisplayFor(modelitem => item.Tilte)</span>
+        </div>
+    }
+</div>
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

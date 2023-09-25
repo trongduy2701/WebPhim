@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Website Phim Hoạt Hình</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script>
+        document.getElementById('searchInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('searchForm').submit();
+                window.location.href = '@Url.Action("Index", "Home")?searchString=' + searchString;
+            }
+        });
+    </script>
+
+    @{
+        var user = Session["User"] as WebsitePhimHoatHinh18.Models.EF.Users;
+    }
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+        <div class="container">
+            @Html.ActionLink("Website Phim Hoạt Hình", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Xem Phim", "Index", "MovieU", new { area = "" }, new { @class = "nav-link" })</li>
+                    @if (Session["User"] != null)
+                    {
+                        <li>@Html.ActionLink("Bình luận", "Index", "CommentU", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Yêu thích", "Index", "FavoriteU", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
+                </ul>
+            </div>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-end">
+                <ul class="navbar-nav">
+                    @if (Session["User"] != null)
+                    {
+                        if (Session["Role"] != null && Session["Role"].ToString() == "Admin")
+                        {
+                            <li class="nav-item">
+                                @Html.ActionLink("Admin", "HomeAdmin", "Admin", new { area = "" }, new { @class = "nav-link" })
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a href="@Url.Action("Details", "UserU")" class="nav-link">Xin chào, @user.UserName</a>
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Đăng xuất", "Logout", "Home", new { area = "" }, new { @class = "nav-link" })
+                        </li>
+
+                    }
+                    else
+                    {
+                        <li class="nav-item">@Html.ActionLink("Đăng nhập", "Login", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Đăng ký", "Register", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
+                </ul>
+                @using (Html.BeginForm("Index", "MovieU", FormMethod.Get))
+                {
+                    <div class="form-group">
+                        @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { @class = "form-control", placeholder = "Tìm kiếm phim..." })
+                    </div>
+                }
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Website Phim Hoạt Hình</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

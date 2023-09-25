@@ -1,0 +1,105 @@
+﻿@model WebsitePhimHoatHinh18.Models.EF.Movies
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Chi tiết phim</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Tilte)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tilte)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Genres.GenreName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Genres.GenreName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Countries.CountryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Countries.CountryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Director)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Director)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Year)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Year)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.View)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.View)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rate)
+        </dd>
+
+        <dd>
+            @if (!string.IsNullOrEmpty(Model.Image))
+            {
+                <img src="@Url.Content("~/Uploads/Images/" + Model.Image)" width="238" height="344" />
+            }
+        </dd>
+
+        <dd>
+            @if (!string.IsNullOrEmpty(Model.Video))
+            {
+                <video controls width="500">
+                    <source src="@Url.Content("~/Uploads/Videos/" + Model.Video)" type="video/mp4">
+                </video>
+            }
+        </dd>
+
+     </dl>
+</div>
+<div>
+    @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-primary" })
+</div>

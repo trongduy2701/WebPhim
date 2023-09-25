@@ -1,0 +1,58 @@
+﻿@model WebsitePhimHoatHinh18.Areas.Admin.Models.MovieListViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+}
+
+<div class="row">
+    <h4>Phim mới</h4>
+    @foreach (var movies in Model.LatestYearMovies)
+    {
+        <div class="col-md-3" style="margin-top:10px;text-align: center; font-size: 18px;">
+            <a href="@Url.Action("Details", "Movies", new { id = movies.MovieID })">
+                <img src="@Url.Content("~/Uploads/Images/" + movies.Image)" width="238" height="344"> <br />
+            </a>
+            <span>@Html.DisplayFor(modelitem => movies.Tilte)</span>
+        </div>
+        <br />
+    }
+    <br />
+    <h4>Phim top lượt xem cao</h4>
+    @foreach (var movies in Model.TopViewMovies)
+    {
+        <div class="col-md-3" style="margin-top:10px;text-align: center; font-size: 18px;">
+            <a href="@Url.Action("Details", "Movies", new { id = movies.MovieID })">
+                <img src="@Url.Content("~/Uploads/Images/" + movies.Image)" width="238" height="344"> <br />
+            </a>
+            <span>@Html.DisplayFor(modelitem => movies.Tilte)</span>
+        </div>
+        <br />
+    }
+    <br />
+    <h3>Phim top đánh giá</h3>
+    @foreach (var movies in Model.TopRateMovies)
+    {
+        <div class="col-md-3" style="margin-top:10px;text-align: center; font-size: 18px;">
+            <a href="@Url.Action("Details", "Movies", new { id = movies.MovieID })">
+                <img src="@Url.Content("~/Uploads/Images/" + movies.Image)" width="238" height="344"> <br />
+            </a>
+            <span>@Html.DisplayFor(modelitem => movies.Tilte)</span>
+        </div>
+        <br />
+    }
+    <br />
+    <h3>Phim top yêu thích</h3>
+    @foreach (var movies in Model.TopFavoriteMovies)
+    {
+        <div class="col-md-3" style="margin-top:10px;text-align: center; font-size: 18px;">
+            <a href="@Url.Action("Details", "Movies", new { id = movies.MovieID })">
+                <img src="@Url.Content("~/Uploads/Images/" + movies.Image)" width="238" height="344"> <br />
+            </a>
+            <span>@Html.DisplayFor(modelitem => movies.Tilte)</span>
+        </div>
+        <br />
+    }
+</div>

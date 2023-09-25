@@ -1,0 +1,66 @@
+﻿@model PagedList.IPagedList<WebsitePhimHoatHinh18.Models.EF.Reports>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+}
+
+<h2>Danh sách báo cáo</h2>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Mã báo cáo
+            </th>
+            <th>
+                Tên phim
+            </th>
+            <th>
+                Tên người dùng
+            </th>
+            <th>
+                Nội dung
+            </th>
+            <th>
+                Ngày tạo
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReportID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Movies.Tilte)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Users.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReportText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    <a href="@Url.Action("Details", new { id = item.ReportID })"><i class="fas fa-info-circle"></i></a>
+                    <a href="@Url.Action("Delete", new { id = item.ReportID })"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        }
+
+</table>
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
